@@ -4,6 +4,7 @@ import com.bank.accounts.constants.*;
 import com.bank.accounts.dto.*;
 import com.bank.accounts.entity.*;
 import com.bank.accounts.service.*;
+import com.bank.accounts.service.implementation.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -12,12 +13,15 @@ import jakarta.persistence.*;
 import jakarta.validation.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.cfg.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 @Tag(name = "CRUD operation for Accounts", description = "Accounts Controller")
@@ -25,12 +29,34 @@ public class AccountsController {
 
     private IAccountService iAccountService;
 
+    public AccountsController(IAccountService iAccountService) {
+        this.iAccountService = iAccountService;
+    }
+
+    @Autowired
+    private Environment environment;
+
+
+    @Autowired
+    private AccountsContactInfoDto accountsContactInfoDto;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+
     @Operation(summary = "Say Hello")
     @GetMapping("/sayHello")
     public String sayHello()
     {
-        return "Welcome to the Bank ...";
+        return "Welcome to the Banking website" + " " + buildVersion + " " + environment.getProperty("JAVA_HOME");
     }
+
+    @GetMapping("/contactInfo")
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(accountsContactInfoDto);
+    }
+
 
     @Operation(summary = "Create Customer",description = "Rest api to create customer in the bank")
     @ApiResponse(responseCode = "201",description = "Customer created successfully")
@@ -44,6 +70,7 @@ public class AccountsController {
                 body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
     }
 
+
     @GetMapping("/fetch")
     public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam
                   @Pattern(regexp = "(^$|[0-9]{10})",message="mobile number should be 10 digits")
@@ -53,6 +80,7 @@ public class AccountsController {
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
 
     }
+
 
     @PutMapping("/update")
     @ApiResponses(value = {

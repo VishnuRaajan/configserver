@@ -1,0 +1,11 @@
+build:
+  version: 3.0
+
+accounts:
+  message : "Accounts Microservice in UAT environment"
+  contactDetails:
+    email: "vishnraajan1995@gmail.com"
+    name  : "Vishnurajan"
+  onCallSupport:
+    - +91 9876543210
+    - +91 9876543211

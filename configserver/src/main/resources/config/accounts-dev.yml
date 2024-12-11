@@ -1,0 +1,11 @@
+build:
+  version: 2.0
+
+accounts:
+  message : "Accounts Microservice in Dev environment"
+  contactDetails:
+    email: "vishnraajan1995@gmail.com"
+    name  : "Vishnurajan"
+  onCallSupport:
+    - +91 9876543210
+    - +91 9876543211

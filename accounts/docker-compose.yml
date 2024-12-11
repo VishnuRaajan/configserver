@@ -1,0 +1,38 @@
+services:
+    accounts:
+      image: "vishnuraajan/accounts:v1"
+      container_name: accounts
+      ports:
+        - "7090:7090"
+      deploy:
+        resources:
+          limits:
+            memory: 700m
+      networks:
+        - bank-network
+    cards:
+      image: "vishnuraajan/cards:v1"
+      container_name: cards
+      ports:
+        - "8090:8090"
+      deploy:
+        resources:
+          limits:
+            memory: 700m
+      networks:
+        - bank-network
+    loans:
+        image: "vishnuraajan/loans:v1"
+        container_name: loans
+        ports:
+          - "8070:8070"
+        deploy:
+          resources:
+            limits:
+              memory: 700m
+        networks:
+          - bank-network
+
+networks:
+  bank-network:
+    driver: bridge

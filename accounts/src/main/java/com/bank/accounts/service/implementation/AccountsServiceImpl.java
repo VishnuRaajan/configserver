@@ -34,16 +34,12 @@ public class AccountsServiceImpl implements IAccountService {
             throw new CustomerAlreadyExistsException("Customer already exists with mobile number "
                     +customerDto.getMobileNumber());
         }
-
         //customer.setCreatedDate(LocalDateTime.now());
         //customer.setCreatedBy("anonymous");
         Customer createdCustomer = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(createdCustomer));
 
-
     }
-
-
 
     private Accounts createNewAccount(Customer customer)
     {
