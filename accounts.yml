@@ -2,7 +2,7 @@ build:
   version: 1.0
 
 accounts:
-  message : "Accounts Microservice in default Api"
+  message : "Accounts Microservice in Local Api"
   contactDetails:
     email: "vishnraajan1995@gmail.com"
     name  : "Vishnurajan"
